@@ -23,27 +23,31 @@ namespace UsingStacks.BackTracking
             Console.ReadLine(  );
         }
         public static void display() {
+            if (SolveMaze(0,0)==false)
+            {
+                Console.WriteLine("No Path");
+            }
             for (int i = 0; i < path.GetLength(0); i++)
             {
                 for (int j = 0; j < path.GetLength(1); j++)
                 {
-                    if (path[1,j]==1)
+                    if (path[i,j]==1)
                     {
-                        Console.WriteLine($"{i} {j}");
+                        Console.WriteLine($"({i} {j})");
                     }
                 }
             }
         }
         public static bool checkPath(int row,int col) {
            
-            return (row >= 0 && row < maze.GetLength(0) - 1)
-                && (col >= 0 && col < maze.GetLength(1) - 1)
+            return (row >= 0 && row < maze.GetLength(0) )
+                && (col >= 0 && col < maze.GetLength(1))
                 && maze[row, col] == 1;
         
         }
 
         public static bool SolveMaze(int row,int col) {
-            if (row == maze.GetLength(0)-1&& col == maze.GetLength(1) - 1)
+            if (row <= maze.GetLength(0)&& col == maze.GetLength(1)-1 )
             {
                 path[row, col] = 1;
                 return true;
@@ -51,13 +55,17 @@ namespace UsingStacks.BackTracking
             if (checkPath(row,col))
             {
                 path[row, col] = 1;
-                if (SolveMaze(row, col+1) == true) return true;
-                if (SolveMaze(row+1, col) == true) return true;
+
+                if (SolveMaze(row, col + 1) == true) return true;
+                if (SolveMaze(row + 1, col) == true) return true;
                 path[row, col] = 0;
                 return false;
-                
+
             }
+          
             return false;
         }
+
+
     }
 }
